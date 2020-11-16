@@ -3,8 +3,8 @@ let query;
 let pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'root',
-    database: 'myblog'
+    password: '123456',
+    database: 'blogSystem'
 })
 query = (sql, values, callback) => {
     //连接池建立链接

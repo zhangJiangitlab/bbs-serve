@@ -32,7 +32,7 @@ module.exports = (router, crud) => {
         } else {
             res.json({
                 status: 1,
-                mess: "请先登录"
+                mess: "管理员未登录，请先登录"
             })
         }
     })

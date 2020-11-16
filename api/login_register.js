@@ -5,8 +5,16 @@ module.exports = (router, crud) => {
         crud("SELECT * FROM `users` WHERE user_name=? AND user_password=?",
             [req.query.userName, req.query.userPassword], data => {
                 if (data.length > 0) {
-                    req.session.userInfo = data[0];
-                    res.json({ status: 0, user_id: req.session.userInfo.user_id });
+                    if (data[0].user_isFreeze === 0) {
+                        req.session.userInfo = data[0];
+                        res.json({ status: 0, user_id: req.session.userInfo.user_id });
+                    }else {
+                        // 代表该账号已冻结
+                        res.json({
+                            status:2,
+                        })
+                    }
+
                 } else {
                     res.json({ status: 1 });
                 }
@@ -29,7 +37,7 @@ module.exports = (router, crud) => {
             user_birthday: jsonDatas.birthday,
             user_address: jsonDatas.address.join(""),
             user_nickName: jsonDatas.nickName,
-            user_createdTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+            user_createdTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         }
         crud("SELECT * FROM `users` WHERE user_name =? OR user_nickName =?", [objDatas.user_name, objDatas.user_nickName], data => {
             // 判断用户名是否已被注册，若已注册，返回{state:1}
