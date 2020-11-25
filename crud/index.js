@@ -3,7 +3,7 @@ let query;
 let pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: 'root',
     database: 'blogSystem'
 })
 query = (sql, values, callback) => {
